@@ -1,0 +1,34 @@
+BODY {
+    background-color: #002;
+
+    color: #5460a5;
+}
+
+DIV {
+    font-size: 16px;
+}
+
+.class-name {
+    color: #6a6e8c;
+}
+
+.class-cat {
+    color: #5cb85c;
+    display: table;
+}
+
+.margin-top {
+    margin-top: 50px
+}
+
+.margin-top .class-cat {
+    color: #51b813;
+    display: table;
+}
+
+.margin-top .class-cat-syt {
+    color: #517178;
+    display: table;
+}
+
+.miska { margin-right: 4px; color: #5cb85c }

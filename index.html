@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue 2.0</title>
+</head>
+<body>
+
+    <div class="container" id="app">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h1>{{ hello }}</h1>
+                <span class="class-name"> Your name is {{ name }}</span>
+            </div>
+        </div>
+        <div class="row">
+            <cat  class="class-cat"
+                  v-for="cat in catList"
+
+                  v-if="!cat.syt"
+                  :name="cat.catName">
+            </cat>
+            <button class="btn" @click="feedCat">Feed</button>
+        </div>
+
+        <div class="row margin-top">
+            <cat
+                    v-for="cat in catList"
+
+                    :class="{ 'class-cat-syt': cat.syt, 'class-cat': !cat.syt }"
+                    :name="cat.catName">
+            </cat>
+        </div>
+
+        <div class="row margin-top">
+            Количество котов, которых нужно покормить: {{ catsObject.count }}<br />
+            <span>Мисок у нас {{ catsObject.miski }}</span>
+        </div>
+
+        <div class="row">
+            <miska></miska>
+        </div>
+    </div>
+
+
+    <script src="bower_components/vue/dist/vue.js"></script>
+    <script src="index.js"></script>
+
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="main.css">
+</body>
+</html>

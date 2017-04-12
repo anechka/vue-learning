@@ -1,0 +1,20 @@
+{
+  "name": "vue-learning",
+  "authors": [
+    "Andrey Menangen <menangen@gmail.com>"
+  ],
+  "description": "vue.js 2.0",
+  "main": "index.js",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "vue": "^2.1.10"
+  }
+}
