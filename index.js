@@ -34,13 +34,21 @@ Vue.component("icon", {
 
 Vue.component("bowl", {
     render: function (createElement) {
-        var myComponent = {
-            data: function() {
-                return {
-                    count: model.state.hasFoodNow
+        var Child = {
+            computed: {
+                count: function () {
+                    return model.state.hasFoodNow
                 }
             },
             template: "<span><icon></icon>Покушали {{ count }}</span>"
+        };
+
+        var myComponent = {
+            components: {
+                // <my-component> will only be available in parent's template
+                'my-component': Child
+            },
+            template: "<my-component></my-component>"
         };
 
         return createElement(myComponent)
