@@ -8,6 +8,10 @@ DIV {
     font-size: 16px;
 }
 
+.clean-padding {
+    padding: 0;
+}
+
 .class-name {
     color: #6a6e8c;
 }
@@ -31,4 +35,10 @@ DIV {
     display: table;
 }
 
-.miska { margin-right: 4px; color: #5cb85c }
+.bowl { margin-right: 4px; color: #5cb85c }
+
+.cat-description {
+    color: #adadad;
+    padding: 2px 4px;
+    border: 1px solid #adadad;
+}
