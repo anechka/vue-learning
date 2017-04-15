@@ -35,10 +35,17 @@ DIV {
     display: table;
 }
 
+.margin-top.select-cat {
+    color: #FA0;
+}
+
 .bowl { margin-right: 4px; color: #5cb85c }
 
 .cat-description {
     color: #adadad;
     padding: 2px 4px;
     border: 1px solid #adadad;
+}
+.cat-table {
+    border: solid 1px #5b51a6;
 }

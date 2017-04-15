@@ -2,6 +2,7 @@ var model = {
     state: {
         description: "Good Cat",
         hasFoodNow: 0,
+        catNames: [],
 
         cats: [
             {catName: "Pusya", syt: false, description: "Серая"},
@@ -9,8 +10,8 @@ var model = {
             {catName: "Oposya", syt: false, description: "Флегматичный"},
             {catName: "Kusya", syt: true, description: "Пятнистый"},
             {catName: "Persik", syt: false, description: "Песчаный"},
-            {catName: "Monja", syt: true, description: "Старая"},
-            {catName: "Musja", syt: true, description: "Черная"},
+            {catName: "Monja", syt: true, description: "Мудрая"},
+            {catName: "Musja", syt: true, description: "Длинноногая"},
             {catName: "Masya", syt: false, description: "Смешная"}
         ]
     }
@@ -21,7 +22,6 @@ Vue.component("cat", {
     methods: {
         clickHdlr: function (e) {
             console.log("Clicked on: " + this.name, "has description: " + this.description);
-
             model.state.description = this.description;
         }
     },
@@ -45,14 +45,30 @@ Vue.component("bowl", {
 
         var myComponent = {
             components: {
-                // <my-component> will only be available in parent's template
-                'my-component': Child
+                // <bowl-component> will only be available in parent's template
+                'bowl-component': Child
             },
-            template: "<my-component></my-component>"
+            template: "<bowl-component></bowl-component>"
         };
 
         return createElement(myComponent)
     }
+});
+
+Vue.component("select-cat", {
+    data: function () {
+      return {
+          sharedState: model.state
+      }
+
+    },
+
+    template: "<form>" +
+                    "<label>Выбери кота</label>" +
+                    "<select title='Выбери кота'>" +
+                        "<option v-for='cat in sharedState.cats'>{{ cat.catName }}</option>" +
+                    "</select>" +
+                  "</form>"
 });
 
 var app = new Vue({
@@ -61,7 +77,6 @@ var app = new Vue({
         hello: "Hello Vue!",
         name: "Аня!",
         bowlValue: 2,
-
         sharedState: model.state
     },
     computed: {
@@ -80,8 +95,10 @@ var app = new Vue({
             for (cat in this.sharedState.cats) {
                 this.sharedState.cats[cat].syt = !this.sharedState.cats[cat].syt;
             }
-
             model.state.hasFoodNow = model.state.cats.length - this.catsObject.count
+        },
+        addCat: function() {
+
         }
     }
 });

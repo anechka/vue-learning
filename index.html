@@ -40,7 +40,9 @@
                     v-for="cat in sharedState.cats"
 
                     :class="{ 'class-cat-syt': cat.syt, 'class-cat': !cat.syt }"
-                    :name="cat.catName">
+                    :name="cat.catName"
+                    :description="cat.description"
+            >
             </cat>
         </div>
 
@@ -53,11 +55,50 @@
         <div class="row">
             <bowl></bowl>
         </div>
+
+        <div class="row margin-top select-cat">
+
+                <span>
+                    Кот-счастливчик, который получит вкусный бонус
+                </span>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-4">
+                <select-cat></select-cat>
+
+            </div>
+
+            <div class="col-xs-4">
+                <button class="btn btn-default" @click="addCat">Добавить кота</button>
+            </div>
+
+        </div>
+
+        <div class="row margin-top">
+            <div class="table-responsive">
+                <table class="table cat-table">
+                    <thead>
+                        <tr>
+                            <td>Cat id</td>
+                            <td>Cat name</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="cat in sharedState.catNames">
+                            <td></td>
+                            <td>{{ cat.catName }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
 
     <script src="bower_components/vue/dist/vue.js"></script>
     <script src="index.js"></script>
+    <!--<script src="array.js"></script>-->
 
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="main.css">
