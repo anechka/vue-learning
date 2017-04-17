@@ -68,14 +68,10 @@
                 <select-cat></select-cat>
 
             </div>
-
-            <div class="col-xs-4">
-                <button class="btn btn-default" @click="addCat">Добавить кота</button>
-            </div>
-
         </div>
 
         <div class="row margin-top">
+
             <div class="table-responsive">
                 <table class="table cat-table">
                     <thead>
@@ -85,8 +81,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="cat in sharedState.catNames">
-                            <td></td>
+                        <tr v-for="(cat, index) in sharedState.pushedCats">
+                            <td>{{ index }}</td>
                             <td>{{ cat.catName }}</td>
                         </tr>
                     </tbody>

@@ -2,7 +2,7 @@ var model = {
     state: {
         description: "Good Cat",
         hasFoodNow: 0,
-        catNames: [],
+        pushedCats: [],
 
         cats: [
             {catName: "Pusya", syt: false, description: "Серая"},
@@ -59,16 +59,35 @@ Vue.component("select-cat", {
     data: function () {
       return {
           sharedState: model.state
+
       }
 
     },
 
-    template: "<form>" +
+    template: "<form action='#'>" +
                     "<label>Выбери кота</label>" +
-                    "<select title='Выбери кота'>" +
-                        "<option v-for='cat in sharedState.cats'>{{ cat.catName }}</option>" +
-                    "</select>" +
-                  "</form>"
+                    "<select id='select-menu' title='Выбери кота'>" +
+                        "<option v-for='catIndexString in sharedState.cats'>{{ catIndexString.catName }}</option>" +
+                    "</select>" + "<button class='btn btn-default' @click='addCat'>Добавить кота</button>" +
+                  "</form>",
+    methods: {
+        addCat: function() {
+
+            var catNameFromSelect = document.getElementById("select-menu").value;
+            var catsArrayModel = this.sharedState.cats;
+
+            for (var catIndex = 0; catIndex < catsArrayModel.length; catIndex++) {
+
+                var currentCat = catsArrayModel[catIndex];
+                console.log(currentCat.catName);
+
+                if(catNameFromSelect === currentCat.catName) {
+                    this.sharedState.pushedCats.push(currentCat);
+                }
+            }
+
+        }
+    }
 });
 
 var app = new Vue({
@@ -83,8 +102,8 @@ var app = new Vue({
         catsObject: function () {
             var shouldFeedCount = 0;
 
-            for (cat in this.sharedState.cats) {
-                if (!this.sharedState.cats[cat].syt) shouldFeedCount++
+            for (catIndexString in this.sharedState.cats) {
+                if (!this.sharedState.cats[catIndexString].syt) shouldFeedCount++
             }
 
             return { count: shouldFeedCount, bowls: Math.round(shouldFeedCount / this.bowlValue) };
@@ -92,13 +111,11 @@ var app = new Vue({
     },
     methods: {
         feedCat: function (e) {
-            for (cat in this.sharedState.cats) {
-                this.sharedState.cats[cat].syt = !this.sharedState.cats[cat].syt;
+            for (catIndexString in this.sharedState.cats) {
+                this.sharedState.cats[catIndexString].syt = !this.sharedState.cats[catIndexString].syt;
             }
             model.state.hasFoodNow = model.state.cats.length - this.catsObject.count
         },
-        addCat: function() {
 
-        }
     }
 });
