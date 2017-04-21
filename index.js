@@ -3,6 +3,7 @@ var model = {
         description: "Good Cat",
         hasFoodNow: 0,
         pushedCats: [],
+        enabledButtons: [],
 
         cats: [
             {catName: "Pusya", syt: false, description: "Серая"},
@@ -59,9 +60,7 @@ Vue.component("select-cat", {
     data: function () {
       return {
           sharedState: model.state
-
       }
-
     },
 
     template: "<form action='#'>" +
@@ -69,7 +68,7 @@ Vue.component("select-cat", {
                     "<select id='select-menu' title='Выбери кота'>" +
                         "<option v-for='catIndexString in sharedState.cats'>{{ catIndexString.catName }}</option>" +
                     "</select>" + "<button class='btn btn-default' @click='addCat'>Добавить кота</button>" +
-                  "</form>",
+              "</form>",
     methods: {
         addCat: function() {
 
@@ -79,15 +78,45 @@ Vue.component("select-cat", {
             for (var catIndex = 0; catIndex < catsArrayModel.length; catIndex++) {
 
                 var currentCat = catsArrayModel[catIndex];
-                console.log(currentCat.catName);
 
                 if(catNameFromSelect === currentCat.catName) {
                     this.sharedState.pushedCats.push(currentCat);
+                    this.sharedState.enabledButtons.push(false);
                 }
             }
 
         }
     }
+});
+
+Vue.component("table-tr-component", {
+    data: function () {
+        return {
+            sharedState: model.state
+        }
+    },
+
+    props: ["index", "cat"],
+
+    template:  "<tr @mouseover='mouseOverTr' @mouseleave='mouseOutTr'>" +
+                    "<td>{{ index }}</td>" +
+                    "<td>{{ cat.catName }}</td>" +
+                    "<td><button class='btn btn-default' v-show='this.sharedState.enabledButtons[this.index]'>Delete</button></td>" +
+                "</tr>",
+    methods: {
+        mouseOverTr: function() {
+            this.sharedState.enabledButtons[this.index] = true;
+            this.$forceUpdate();
+        },
+
+        mouseOutTr: function() {
+            this.sharedState.enabledButtons[this.index] = false;
+            this.$forceUpdate();
+        }
+
+
+    }
+
 });
 
 var app = new Vue({

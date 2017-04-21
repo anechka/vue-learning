@@ -66,7 +66,6 @@
         <div class="row">
             <div class="col-xs-4">
                 <select-cat></select-cat>
-
             </div>
         </div>
 
@@ -81,10 +80,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(cat, index) in sharedState.pushedCats">
-                            <td>{{ index }}</td>
-                            <td>{{ cat.catName }}</td>
-                        </tr>
+                        <tr is="table-tr-component" :cat="cat" :index="index" v-for='(cat, index) in sharedState.pushedCats'></tr>
                     </tbody>
                 </table>
             </div>
