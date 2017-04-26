@@ -134,3 +134,18 @@ var app = new Vue({
         'table-tr-component': localComponents.table
     }
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    console.log("Loaded");
+
+    fetch('browser').then(function (response) {
+
+        if (response.ok) {
+            return response.json();
+        }
+        throw new Error('Network response was not ok.');
+
+    }).then(function (djangoJson) {
+        console.log(djangoJson)
+    })
+});
