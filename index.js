@@ -101,7 +101,7 @@ Vue.component("table-tr-component", {
     template:  "<tr @mouseover='mouseOverTr' @mouseleave='mouseOutTr'>" +
                     "<td>{{ index }}</td>" +
                     "<td>{{ cat.catName }}</td>" +
-                    "<td><button class='btn btn-default' v-show='this.sharedState.enabledButtons[this.index]'>Delete</button></td>" +
+                    "<td><button class='btn btn-default' v-show='this.sharedState.enabledButtons[this.index]' @click='btnClick'>Delete</button></td>" +
                 "</tr>",
     methods: {
         mouseOverTr: function() {
@@ -112,9 +112,13 @@ Vue.component("table-tr-component", {
         mouseOutTr: function() {
             this.sharedState.enabledButtons[this.index] = false;
             this.$forceUpdate();
+        },
+
+        btnClick: function() {
+            this.sharedState.pushedCats.splice(this.index,1);
+            this.sharedState.enabledButtons.splice(this.index,1);
         }
-
-
+        
     }
 
 });
