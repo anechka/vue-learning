@@ -5,16 +5,7 @@ var model = {
         pushedCats: [],
         enabledButtons: [],
 
-        cats: [
-            {catName: "Pusya", syt: false, description: "Серая"},
-            {catName: "Mosha", syt: false, description: "Турок"},
-            {catName: "Oposya", syt: false, description: "Флегматичный"},
-            {catName: "Kusya", syt: true, description: "Пятнистый"},
-            {catName: "Persik", syt: false, description: "Песчаный"},
-            {catName: "Monja", syt: true, description: "Мудрая"},
-            {catName: "Musja", syt: true, description: "Длинноногая"},
-            {catName: "Masya", syt: false, description: "Смешная"}
-        ]
+        cats: null
     }
 };
 
@@ -100,6 +91,13 @@ var localComponents = {
             btnClick: function () {
                 this.sharedState.pushedCats.splice(this.index, 1);
                 this.sharedState.enabledButtons.splice(this.index, 1);
+                fetch('/browser', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: this.index
+                });
             }
 
         }
@@ -143,9 +141,12 @@ var app = new Vue({
 });
 
 document.addEventListener('DOMContentLoaded', function () {
-    console.log("Loaded");
+    var browserInfo = "old";
 
+    // If fetch API is available:
     if (window.fetch) {
+        browserInfo = "new";
+
         fetch('browser').then(function (response) {
 
             if (response.ok) {
@@ -154,9 +155,22 @@ document.addEventListener('DOMContentLoaded', function () {
             throw new Error('Network response was not ok.');
 
         }).then(function (djangoJson) {
-            console.log(djangoJson)
+            model.state.cats = djangoJson;
+            console.log(model.state.cats);
         })
-    } else {
-        alert("Use XHR code below");
     }
+    // Old browsers:
+    else {
+        alert("Use XHR code below");
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open('GET', '/browser', false);
+        xhr.send(null);
+
+        if(xhr.status === 200)
+            console.log(JSON.parse(xhr.responseText));
+    }
+
+    console.log("Loaded in " + browserInfo + " browser");
 });
