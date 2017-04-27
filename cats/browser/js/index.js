@@ -138,14 +138,18 @@ var app = new Vue({
 document.addEventListener('DOMContentLoaded', function () {
     console.log("Loaded");
 
-    fetch('browser').then(function (response) {
+    if (window.fetch) {
+        fetch('browser').then(function (response) {
 
-        if (response.ok) {
-            return response.json();
-        }
-        throw new Error('Network response was not ok.');
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error('Network response was not ok.');
 
-    }).then(function (djangoJson) {
-        console.log(djangoJson)
-    })
+        }).then(function (djangoJson) {
+            console.log(djangoJson)
+        })
+    } else {
+        alert("Use XHR code below");
+    }
 });
