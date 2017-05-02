@@ -46,6 +46,63 @@ DIV {
     padding: 2px 4px;
     border: 1px solid #adadad;
 }
+
+.btn-primary {
+    color: #5dc9bd;
+    background-color: #0d393b;
+    border-color: #10333b;
+}
+
+.btn-primary:hover {
+    color: #5dc9bd;
+    background-color: #004443;
+    border-color: #10333b;
+}
+
+.btn-primary.active.focus,
+.btn-primary.active:focus,
+.btn-primary.active:hover,
+.btn-primary.focus:active,
+.btn-primary:active:focus,
+.btn-primary:active:hover {
+    color: #00ffdc;
+    background-color: #004443;
+    border-color: #10333b;
+}
+
 .cat-table {
     border: solid 1px #5b51a6;
+}
+
+.cat-table tr {
+    height: 32px;
+    background-color: #1c1c36;
+}
+
+.cat-table > tbody > tr > td,
+.cat-table > tbody > tr > th,
+.cat-table > tfoot > tr > td,
+.cat-table > tfoot > tr > th,
+.cat-table > thead > tr > td,
+.cat-table > thead > tr > th {
+    padding: 8px;
+    line-height: 2.0;
+    vertical-align: top;
+    border-top: 1px solid #002;
+}
+
+.cat-table .delete-button-td {
+    width: 64px;
+}
+
+.cat-table .btn-primary {
+    color: #ff00b4;
+    background-color: #002;
+    border-color: #002;
+}
+
+.cat-table .btn-primary:hover {
+    color: #0b072a;
+    background-color: #ff00b4;
+    border-color: #ff00b4;
 }
