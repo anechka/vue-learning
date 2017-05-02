@@ -42,7 +42,7 @@ var localComponents = {
         "<label>Выбери кота</label>" +
         "<select id='select-menu' title='Выбери кота'>" +
         "<option v-for='catIndexString in sharedState.cats'>{{ catIndexString.catName }}</option>" +
-        "</select>" + "<button class='btn btn-default' @click='addCat'>Добавить кота</button>" +
+        "</select>" + "<button class='btn btn-primary btn-sm' @click='addCat' type='button'>Добавить кота</button>" +
         "</form>",
         methods: {
             addCat: function () {
@@ -74,8 +74,9 @@ var localComponents = {
         template: "<tr @mouseover='mouseOverTr' @mouseleave='mouseOutTr'>" +
         "<td>{{ index }}</td>" +
         "<td>{{ cat.catName }}</td>" +
-        "<td><button class='btn btn-default' v-show='this.sharedState.enabledButtons[this.index]' @click='btnClick'>Delete</button></td>" +
-        "</tr>",
+        "<td class='delete-button-td'>" +
+        "<button class='btn btn-primary btn-xs' v-show='this.sharedState.enabledButtons[this.index]' @click='deleteCat'>Delete</button>" +
+        "</td></tr>",
 
         methods: {
             mouseOverTr: function () {
@@ -88,7 +89,7 @@ var localComponents = {
                 this.$forceUpdate();
             },
 
-            btnClick: function () {
+            deleteCat: function () {
                 this.sharedState.pushedCats.splice(this.index, 1);
                 this.sharedState.enabledButtons.splice(this.index, 1);
                 fetch('/browser', {
