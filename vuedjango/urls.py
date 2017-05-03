@@ -22,5 +22,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
     url(r'^$', views.index, name='index'),
-    url(r'^browser$', views.cats, name='cats')
+
+    url(r'^cats$', views.get_cats, name='get_cats'),
+    url(r'^cats/delete$', views.delete_cats, name='delete_cats')
 ]
