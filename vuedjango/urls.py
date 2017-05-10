@@ -23,6 +23,6 @@ urlpatterns = [
 
     url(r'^$', views.index, name='index'),
 
-    url(r'^cats$', views.get_cats, name='get_cats'),
-    url(r'^cats/delete$', views.delete_cats, name='delete_cats')
+    url(r'^cats[/]?$', views.get_cats, name='get_cats'),
+    url(r'^cats/(?P<cat_name>[A-Z][a-z]{2,31})$', views.process_one_cat, name='get_one_cat')
 ]
