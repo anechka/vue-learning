@@ -93,11 +93,8 @@ var localComponents = {
                 this.sharedState.pushedCats.splice(this.index, 1);
                 this.sharedState.enabledButtons.splice(this.index, 1);
                 fetch('/browser', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: this.index
+                    method: 'DELETE',
+                    body: this.cat.catName
                 });
             }
 
@@ -162,15 +159,13 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     // Old browsers:
     else {
-        alert("Use XHR code below");
-
         var xhr = new XMLHttpRequest();
 
         xhr.open('GET', '/browser', false);
         xhr.send(null);
 
         if(xhr.status === 200)
-            console.log(JSON.parse(xhr.responseText));
+            model.state.cats = JSON.parse(xhr.responseText);
     }
 
     console.log("Loaded in " + browserInfo + " browser");
