@@ -18,7 +18,7 @@ var localComponents = {
         },
         template: "<span><icon></icon>Покушали {{ count }}</span>",
         components: {
-            'icon': {template: "<span class='glyphicon glyphicon-cutlery bowl'></span>"}
+            'icon': { template: "<span class='glyphicon glyphicon-cutlery bowl'></span>" }
         }
     },
     cat: {
@@ -34,27 +34,28 @@ var localComponents = {
     selectCat: {
         data: function () {
             return {
-                sharedState: model.state
+                sharedState: model.state,
+                selectedCat: ''
             }
         },
 
         template: "<form action='#'>" +
-        "<label>Выбери кота</label>" +
-        "<select id='select-menu' title='Выбери кота'>" +
+        "<label>Список котов</label>" +
+        "<select id='select-menu' title='Выбери кота' v-model='selectedCat'>" +
+        "<option disabled value=''>Выберите кота</option>" +
         "<option v-for='catIndexString in sharedState.cats'>{{ catIndexString.catName }}</option>" +
         "</select>" + "<button class='btn btn-primary btn-sm' @click='addCat' type='button'>Добавить кота</button>" +
         "</form>",
         methods: {
             addCat: function () {
 
-                var catNameFromSelect = document.getElementById("select-menu").value;
                 var catsArrayModel = this.sharedState.cats;
 
                 for (var catIndex = 0; catIndex < catsArrayModel.length; catIndex++) {
 
                     var currentCat = catsArrayModel[catIndex];
 
-                    if (catNameFromSelect === currentCat.catName) {
+                    if (this.selectedCat === currentCat.catName) {
                         this.sharedState.pushedCats.push(currentCat);
                         this.sharedState.enabledButtons.push(false);
                     }
@@ -80,19 +81,20 @@ var localComponents = {
 
         methods: {
             mouseOverTr: function () {
-                this.sharedState.enabledButtons[this.index] = true;
-                this.$forceUpdate();
+                Vue.set(this.sharedState.enabledButtons, this.index, true)
+                // this.$forceUpdate();
             },
 
             mouseOutTr: function () {
-                this.sharedState.enabledButtons[this.index] = false;
-                this.$forceUpdate();
+                Vue.set(this.sharedState.enabledButtons, this.index, false)
+                // this.$forceUpdate();
             },
 
             deleteCat: function () {
                 this.sharedState.pushedCats.splice(this.index, 1);
                 this.sharedState.enabledButtons.splice(this.index, 1);
-                fetch('/browser', {
+
+                fetch('/cats/delete', {
                     method: 'DELETE',
                     body: this.cat.catName
                 });
@@ -135,38 +137,33 @@ var app = new Vue({
         'cat': localComponents.cat,
         'select-cat': localComponents.selectCat,
         'table-tr-component': localComponents.table
-    }
-});
+    },
+    beforeCreate: function () {
+        // If fetch API is available:
+        if (window.fetch) {
+            fetch('cats').then(function (response) {
 
-document.addEventListener('DOMContentLoaded', function () {
-    var browserInfo = "old";
+                if (response.ok) {
+                    return response.json();
+                }
 
-    // If fetch API is available:
-    if (window.fetch) {
-        browserInfo = "new";
+                alert('Network Error. Django is running?');
+                throw new Error('Network response was not ok.');
 
-        fetch('browser').then(function (response) {
+            }).then(function (djangoJson) {
+                model.state.cats = djangoJson;
+            })
+        }
 
-            if (response.ok) {
-                return response.json();
-            }
-            throw new Error('Network response was not ok.');
-
-        }).then(function (djangoJson) {
-            model.state.cats = djangoJson;
-            console.log(model.state.cats);
-        })
-    }
     // Old browsers:
     else {
         var xhr = new XMLHttpRequest();
 
-        xhr.open('GET', '/browser', false);
-        xhr.send(null);
+            xhr.open('GET', '/cats', false);
+            xhr.send(null);
 
-        if(xhr.status === 200)
-            model.state.cats = JSON.parse(xhr.responseText);
+            if(xhr.status === 200)
+                model.state.cats = JSON.parse(xhr.responseText);
+        }
     }
-
-    console.log("Loaded in " + browserInfo + " browser");
 });
