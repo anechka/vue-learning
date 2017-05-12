@@ -6,6 +6,36 @@ var model = {
         enabledButtons: [],
 
         cats: null
+    },
+
+    fetchCats: function () {
+        // If fetch API is available:
+        if (window.fetch) {
+            fetch('cats').then(function (response) {
+
+                if (response.ok) {
+                    return response.json();
+                }
+
+                alert('Network Error. Django is running?');
+                throw new Error('Network response was not ok.');
+
+            }).then(function (djangoJson) {
+                model.state.cats = djangoJson;
+            })
+        }
+
+        // Old browsers:
+        else {
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('GET', '/cats', false);
+            xhr.send(null);
+
+            if(xhr.status === 200)
+                model.state.cats = JSON.parse(xhr.responseText);
+        }
+
     }
 };
 
@@ -94,10 +124,21 @@ var localComponents = {
                 this.sharedState.pushedCats.splice(this.index, 1);
                 this.sharedState.enabledButtons.splice(this.index, 1);
 
-                fetch('/cats/delete', {
-                    method: 'DELETE',
-                    body: this.cat.catName
-                });
+                var self = this;
+
+                // ajax
+                fetch('/cats/' + this.cat.catName, {
+                    method: 'DELETE'
+                })
+                .then(function(response){
+                    if (response.ok) {
+                        model.fetchCats();
+                    }
+                    else {
+                        alert('Network Error. Django is running?');
+                        throw new Error('Network response was not ok.');
+                    }
+                })
             }
 
         }
@@ -124,7 +165,9 @@ var app = new Vue({
             return { count: shouldFeedCount, bowls: Math.round(shouldFeedCount / this.bowlValue) };
         }
     },
+
     methods: {
+
         feedCat: function (e) {
             for (catIndexString in this.sharedState.cats) {
                 this.sharedState.cats[catIndexString].syt = !this.sharedState.cats[catIndexString].syt;
@@ -138,32 +181,6 @@ var app = new Vue({
         'select-cat': localComponents.selectCat,
         'table-tr-component': localComponents.table
     },
-    beforeCreate: function () {
-        // If fetch API is available:
-        if (window.fetch) {
-            fetch('cats').then(function (response) {
 
-                if (response.ok) {
-                    return response.json();
-                }
-
-                alert('Network Error. Django is running?');
-                throw new Error('Network response was not ok.');
-
-            }).then(function (djangoJson) {
-                model.state.cats = djangoJson;
-            })
-        }
-
-    // Old browsers:
-    else {
-        var xhr = new XMLHttpRequest();
-
-            xhr.open('GET', '/cats', false);
-            xhr.send(null);
-
-            if(xhr.status === 200)
-                model.state.cats = JSON.parse(xhr.responseText);
-        }
-    }
+    beforeCreate: model.fetchCats
 });
