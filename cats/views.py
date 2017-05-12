@@ -34,10 +34,14 @@ def process_one_cat(request, cat_name):
         try:
             cat_object = Cat.objects.get(name=cat_name)
 
-            return JsonResponse({"catName": cat_object.name, "syt": cat_object.fed, "description": cat_object.description})
+            return JsonResponse({"catName": cat_object.name, "age": cat_object.age})
         except ObjectDoesNotExist:
             return JsonResponse({'result': 'error', 'info': 'There is no cat with that name'})
 
     elif request.method == 'DELETE':
-        Cat.objects.get(name=cat_name).delete()
-        return JsonResponse({'result': 'ok', 'info': u'Cat with name {0} deleted'.format(cat_name)})
+        try:
+            Cat.objects.get(name=cat_name).delete()
+
+            return JsonResponse({'result': 'ok', 'info': u'Cat with name {0} deleted'.format(cat_name)})
+        except ObjectDoesNotExist:
+            return JsonResponse({'result': 'error', 'info': 'There is no cat with that name'})
