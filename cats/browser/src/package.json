@@ -1,0 +1,31 @@
+{
+  "name": "vue-django",
+  "version": "1.0.0",
+  "description": "Vue.js 2.3.3 and Django REST",
+  "main": "index.js",
+  "scripts": {
+    "build": "node_modules/.bin/gulp --production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anechka/vue-learning.git"
+  },
+  "keywords": [
+    "vue",
+    "vue.js",
+    "django",
+    "javascript",
+    "python"
+  ],
+  "author": "Anna Novikova <pesik@ane4k.in>",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/anechka/vue-learning/issues"
+  },
+  "homepage": "https://github.com/anechka/vue-learning#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "rollup-plugin-buble": "^0.15.0",
+    "rollup-stream": "^1.19.0"
+  }
+}
