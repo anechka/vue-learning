@@ -1,4 +1,4 @@
-var my_array = new Array();
+const my_array = new Array();
 
 my_array[0] = "Test";
 my_array[1] = "T344";
@@ -16,7 +16,7 @@ for (property in my_array) {
 
 console.warn("Indexes");
 console.warn("Length is: ", my_array.length);
-for (var index = 0; index < my_array.length; index++) {
+for (let index = 0; index < my_array.length; index++) {
     console.info(typeof index);
     console.info(index);
 }

@@ -103,5 +103,5 @@ USE_TZ = True
 
 STATIC_URL = '/browser/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "cats/browser")
+    os.path.join(BASE_DIR, "cats/browser/dist")
 ]
