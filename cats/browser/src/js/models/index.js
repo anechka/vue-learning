@@ -22,7 +22,7 @@ const model = {
                     return response.json();
                 }
 
-                alert('Network Error. Django is running?');
+                console.warn('Network Error. Django is running?');
                 throw new Error('Network response was not ok.');
 
             }).then(djangoJson => {
@@ -37,8 +37,7 @@ const model = {
             xhr.open('GET', '/cats', false);
             xhr.send(null);
 
-            if(xhr.status === 200)
-                model.state.cats = JSON.parse(xhr.responseText);
+            if(xhr.status === 200) model.state.cats = JSON.parse(xhr.responseText);
         }
 
     }

@@ -13,7 +13,7 @@ export default {
                 return model.state.hasFoodNow
             }
         },
-        template: "<span><icon></icon>Покушали {{ count }}</span>",
+        template: '<span><icon></icon>Покушали {{ count }}</span>',
         components: {
             'icon': { template: '<span class="glyphicon glyphicon-cutlery bowl"></span>' }
         }
@@ -97,7 +97,7 @@ export default {
                         model.fetchCats();
                     }
                     else {
-                        alert('Network Error. Django is running?');
+                        console.warn('Network Error. Django is running?');
                         throw new Error('Network response was not ok.');
                     }
                 });
