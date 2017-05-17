@@ -1,6 +1,7 @@
 var model = {
     state: {
         description: "Good Cat",
+        age: null,
         hasFoodNow: 0,
         pushedCats: [],
         enabledButtons: [],
@@ -52,14 +53,48 @@ var localComponents = {
         }
     },
     cat: {
-        props: ["name", "description"],
+        props: ["name", "description", "cat"],
         methods: {
-            clickHdlr: function (e) {
+            showCatDescription: function (e) {
                 console.log("Clicked on: " + this.name, "has description: " + this.description);
                 model.state.description = this.description;
+            },
+            showCatAge: function (e) {
+
+                if(window.fetch) {
+                    fetch('/cats/' + this.cat.catName)
+                        .then(function (response) {
+                            if (response.ok) {
+                                return response.json();
+                            }
+
+                            alert('Network Error. Django is running?');
+                            throw new Error('Network response was not ok.');
+                        })
+                        .then(function (catAge) {
+                            model.state.age = catAge.age;
+                            console.log(model.state.age);
+
+                    })
+                }
+                // Old browsers:
+                else {
+                    var xhr = new XMLHttpRequest();
+
+                    xhr.open('GET', '/cats/' + this.cat.catName, false);
+                    xhr.send(null);
+
+                    if(xhr.status === 200)
+                        var catAge = JSON.parse(xhr.responseText);
+                        model.state.age = catAge["age"];
+
+                        console.log(model.state.age);
+
+
+                }
             }
         },
-        template: "<span @click='clickHdlr'>{{ name }}</span>"
+        template: "<span @mouseover='showCatDescription' @click='showCatAge'>{{ name }}</span>"
     },
     selectCat: {
         data: function () {
@@ -124,21 +159,34 @@ var localComponents = {
                 this.sharedState.pushedCats.splice(this.index, 1);
                 this.sharedState.enabledButtons.splice(this.index, 1);
 
-                var self = this;
-
                 // ajax
-                fetch('/cats/' + this.cat.catName, {
-                    method: 'DELETE'
-                })
-                .then(function(response){
-                    if (response.ok) {
+                if(window.fetch) {
+                    fetch('/cats/' + this.cat.catName, {
+                        method: 'DELETE'
+                    })
+                        .then(function(response){
+                            if (response.ok) {
+                                model.fetchCats();
+                            }
+                            else {
+                                alert('Network Error. Django is running?');
+                                throw new Error('Network response was not ok.');
+                            }
+                        })
+
+                }
+                // Old browsers:
+                else {
+                    var xhr = new XMLHttpRequest();
+
+                    xhr.open('DELETE', '/cats/' + this.cat.catName, false);
+                    xhr.send(null);
+
+                    if(xhr.status === 200)
                         model.fetchCats();
-                    }
-                    else {
-                        alert('Network Error. Django is running?');
-                        throw new Error('Network response was not ok.');
-                    }
-                })
+
+                }
+
             }
 
         }
