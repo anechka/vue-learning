@@ -55,7 +55,7 @@ gulp.task('lint', () => {
                 },
                 extends: "eslint:recommended",
                 rules: {
-                    "indent": "error",
+                    "indent": "warn",
                     "camelcase": "warn",
                     "comma-dangle": "warn",
                     "quotes": ["warn", "double", { "allowTemplateLiterals": true, "avoidEscape": true }],
@@ -69,7 +69,7 @@ gulp.task('lint', () => {
                     "no-else-return"   : "warn",
                     "block-spacing": "error",
                     "space-unary-ops": "error",
-                    "consistent-return": "error",
+                    "consistent-return": "warn",
                     "no-sparse-arrays": "error",
                     "no-template-curly-in-string": "error",
                     "no-unreachable": "error",
@@ -135,7 +135,8 @@ gulp.task('lint', () => {
                             "allowBlockStart": true,
                             "allowObjectStart": true
                         }
-                    ]
+                    ],
+                    "arrow-parens": ["warn", "as-needed"]
                 },
                 envs: [
                     'es6'

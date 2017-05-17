@@ -21,12 +21,45 @@ export default {
     cat: {
         props: ["name", "description"],
         methods: {
-            clickHdlr() {
-                console.log(`Clicked on: ${this.name} || has description: ${this.description}`);
+            showCatDescription() {
+                //console.log(`Clicked on: ${this.name} || has description: ${this.description}`);
                 model.state.description = this.description;
+            },
+            showCatAge() {
+                const self = this;
+
+                if (window.fetch) {
+                    fetch(`/cats/${self.name}`)
+                        .then(response => {
+
+                            if (response.ok) {
+                                return response.json()
+                            }
+
+                            throw new Error("Network response was not ok.")
+                        })
+                        .then(catObjectFromJSON => {
+                            model.state.age = catObjectFromJSON.age
+                        })
+                        .catch(() => {
+                            console.warn("Network Error. Django is running?")
+                        })
+                }
+                // Old browsers:
+                else {
+                    const xhr = new XMLHttpRequest();
+
+                    xhr.open("GET", `/cats/${this.name}`, false);
+                    xhr.send(null);
+
+                    if (xhr.status === 200) {
+                        const catJSON = JSON.parse(xhr.responseText);
+                        model.state.age = catJSON.age;
+                    }
+                }
             }
         },
-        template: `<span @click="clickHdlr">{{ name }}</span>`
+        template: `<span @mouseover="showCatDescription" @click="showCatAge">{{ name }}</span>`
     },
     selectCat: {
         data() {
@@ -89,18 +122,29 @@ export default {
                 const self = this;
 
                 // ajax
-                fetch(`/cats/${self.cat.catName}`, {
-                    method: "DELETE"
-                })
-                .then(response => {
-                    if (response.ok) {
-                        model.fetchCats();
-                    }
-                    else {
+                if (window.fetch) {
+                    fetch(`/cats/${self.cat.catName}`, {
+                        method: "DELETE"
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            model.fetchCats()
+                        }
+                    })
+                    .catch(() => {
                         console.warn("Network Error. Django is running?");
                         throw new Error("Network response was not ok.");
-                    }
-                });
+                    })
+                }
+                // Old browsers:
+                else {
+                    const xhr = new XMLHttpRequest();
+
+                    xhr.open("DELETE", `/cats/${this.cat.catName}`, false);
+                    xhr.send(null);
+
+                    if (xhr.status === 200) model.fetchCats();
+                }
             }
 
         }

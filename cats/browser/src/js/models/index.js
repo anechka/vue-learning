@@ -7,6 +7,7 @@
 const model = {
     state: {
         description: "Good Cat",
+        age: null,
         hasFoodNow: 0,
         pushedCats: [],
         enabledButtons: [],
@@ -23,11 +24,13 @@ const model = {
                     return response.json();
                 }
 
-                console.warn("Network Error. Django is running?");
                 throw new Error("Network response was not ok.");
-
-            }).then(djangoJson => {
+            })
+            .then(djangoJson => {
                 model.state.cats = djangoJson;
+            })
+            .catch(() => {
+                console.warn("Network Error. Django is running?");
             })
         }
 
