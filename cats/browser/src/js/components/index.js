@@ -13,26 +13,26 @@ export default {
                 return model.state.hasFoodNow
             }
         },
-        template: '<span><icon></icon>Покушали {{ count }}</span>',
+        template: `<span><icon></icon>Покушали {{ count }}</span>`,
         components: {
-            'icon': { template: '<span class="glyphicon glyphicon-cutlery bowl"></span>' }
+            "icon": { template: `<span class="glyphicon glyphicon-cutlery bowl"></span>` }
         }
     },
     cat: {
-        props: ['name', 'description'],
+        props: ["name", "description"],
         methods: {
             clickHdlr() {
                 console.log(`Clicked on: ${this.name} || has description: ${this.description}`);
                 model.state.description = this.description;
             }
         },
-        template: '<span @click="clickHdlr">{{ name }}</span>'
+        template: `<span @click="clickHdlr">{{ name }}</span>`
     },
     selectCat: {
         data() {
             return {
                 sharedState: model.state,
-                selectedCat: ''
+                selectedCat: ""
             }
         },
 
@@ -63,7 +63,7 @@ export default {
                 sharedState: model.state
             }
         },
-        props: ['index', 'cat'],
+        props: ["index", "cat"],
 
         template: `<tr @mouseover="mouseOverTr" @mouseleave="mouseOutTr">
                             <td>{{ index }}</td>
@@ -90,15 +90,15 @@ export default {
 
                 // ajax
                 fetch(`/cats/${self.cat.catName}`, {
-                    method: 'DELETE'
+                    method: "DELETE"
                 })
                 .then(response => {
                     if (response.ok) {
                         model.fetchCats();
                     }
                     else {
-                        console.warn('Network Error. Django is running?');
-                        throw new Error('Network response was not ok.');
+                        console.warn("Network Error. Django is running?");
+                        throw new Error("Network response was not ok.");
                     }
                 });
             }

@@ -9,10 +9,10 @@ import localComponents from "components"
 import model from "models"
 
 const app = new Vue({
-    el: '#app',
+    el: "#app",
     data: {
-        hello: 'Hello Vue!',
-        name: 'Аня!',
+        hello: "Hello Vue!",
+        name: "Аня!",
         bowlValue: 2,
         sharedState: model.state
     },
@@ -38,10 +38,10 @@ const app = new Vue({
         }
     },
     components: {
-        'bowl': localComponents.bowl,
-        'cat': localComponents.cat,
-        'select-cat': localComponents.selectCat,
-        'table-tr-component': localComponents.table
+        "bowl": localComponents.bowl,
+        "cat": localComponents.cat,
+        "select-cat": localComponents.selectCat,
+        "table-tr-component": localComponents.table
     },
 
     beforeCreate: model.fetchCats

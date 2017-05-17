@@ -6,24 +6,25 @@
 
 const model = {
     state: {
-        description: 'Good Cat',
+        description: "Good Cat",
         hasFoodNow: 0,
         pushedCats: [],
         enabledButtons: [],
-        cats: []// TODO: Should not be a 'null' object
+        // TODO: Should not be a null object
+        cats: []
     },
 
     fetchCats() {
         // If fetch API is available:
         if (window.fetch) {
-            fetch('cats').then(response => {
+            fetch("cats").then(response => {
 
                 if (response.ok) {
                     return response.json();
                 }
 
-                console.warn('Network Error. Django is running?');
-                throw new Error('Network response was not ok.');
+                console.warn("Network Error. Django is running?");
+                throw new Error("Network response was not ok.");
 
             }).then(djangoJson => {
                 model.state.cats = djangoJson;
@@ -34,10 +35,10 @@ const model = {
         else {
             const xhr = new XMLHttpRequest();
 
-            xhr.open('GET', '/cats', false);
+            xhr.open("GET", "/cats", false);
             xhr.send(null);
 
-            if(xhr.status === 200) model.state.cats = JSON.parse(xhr.responseText);
+            if (xhr.status === 200) model.state.cats = JSON.parse(xhr.responseText);
         }
 
     }
