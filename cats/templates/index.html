@@ -21,16 +21,13 @@
             <div class="col-xs-3">
                 <div class="row">
                     <div class="col-xs-7 clean-padding">
-                        <cat class="class-cat"
-                             v-for="cat in sharedState.cats"
-
-
-                             v-if="!cat.syt"
-                             :name="cat.catName"
-                             :description="cat.description"
-                             :cat="cat"
-                        >
-                        </cat>
+                        <cat
+                            class="class-cat"
+                            v-for="cat in sharedState.cats"
+                            v-if="!cat.syt"
+                            :name="cat.catName"
+                            :description="cat.description"
+                        ></cat>
                         <button class="btn btn-primary btn-sm" @click="feedCat">Feed</button>
                     </div>
                     <div class="col-xs-5" v-show="sharedState.age">
@@ -54,12 +51,11 @@
 
         <div class="row margin-top">
             <cat
-                    v-for="cat in sharedState.cats"
+                v-for="cat in sharedState.cats"
 
-                    :class="{ 'class-cat-syt': cat.syt, 'class-cat': !cat.syt }"
-                    :name="cat.catName"
-                    :description="cat.description"
-                    :cat="cat"
+                :class="{ 'class-cat-syt': cat.syt, 'class-cat': !cat.syt }"
+                :name="cat.catName"
+                :description="cat.description"
             >
             </cat>
         </div>
@@ -121,7 +117,7 @@
     <script src="https://unpkg.com/vue"></script>
 
     <!-- JAVASCRIPT Core -->
-    <script src="browser/js/index.js"></script>
+    <script src="browser/js/all.js"></script>
     <!--<script src="array.js"></script>-->
 </body>
 </html>
