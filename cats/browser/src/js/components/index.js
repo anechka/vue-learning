@@ -15,14 +15,15 @@ export default {
         },
         template: `<span><icon></icon>Покушали {{ count }}</span>`,
         components: {
-            "icon": { template: `<span class="glyphicon glyphicon-cutlery bowl"></span>` }
+            "icon": {
+                template: `<span class="glyphicon glyphicon-cutlery bowl"></span>`
+            }
         }
     },
     cat: {
         props: ["name", "description"],
         methods: {
             showCatDescription() {
-                //console.log(`Clicked on: ${this.name} || has description: ${this.description}`);
                 model.state.description = this.description;
             },
             showCatAge() {
@@ -54,6 +55,7 @@ export default {
 
                     if (xhr.status === 200) {
                         const catJSON = JSON.parse(xhr.responseText);
+
                         model.state.age = catJSON.age;
                     }
                 }
@@ -73,9 +75,13 @@ export default {
                             <label>Список котов</label>
                             <select id="select-menu" title="Выбери кота" v-model="selectedCat">
                                 <option disabled value="">Выберите кота</option>
-                                <option v-for="catIndexString in sharedState.cats">{{ catIndexString.catName }}</option>
+                                <option v-for="catIndexString in sharedState.cats">
+                                    {{ catIndexString.catName }}
+                                </option>
                             </select>
-                            <button class="btn btn-primary btn-sm" @click="addCat" type="button">Добавить кота</button>
+                            <button class="btn btn-primary btn-sm" @click="addCat" type="button">
+                                Добавить кота
+                            </button>
                         </form>`,
         methods: {
             addCat() {
@@ -102,7 +108,12 @@ export default {
                             <td>{{ index }}</td>
                             <td>{{ cat.catName }}</td>
                             <td class="delete-button-td">
-                                <button class="btn btn-primary btn-xs" v-show="sharedState.enabledButtons[this.index]" @click="deleteCat">Delete</button>
+                                <button
+                                    class="btn btn-primary btn-xs"
+                                    v-show="sharedState.enabledButtons[this.index]"
+                                    @click="deleteCat">
+                                        Delete
+                                </button>
                             </td>
                         </tr>`,
 
@@ -127,13 +138,11 @@ export default {
                         method: "DELETE"
                     })
                     .then(response => {
-                        if (response.ok) {
-                            model.fetchCats()
-                        }
+                        if (response.ok) model.fetchCats()
+                        else throw new Error("Network response was not ok.");
                     })
                     .catch(() => {
-                        console.warn("Network Error. Django is running?");
-                        throw new Error("Network response was not ok.");
+                        console.error("Network Error. Django is running?")
                     })
                 }
                 // Old browsers:
@@ -144,6 +153,7 @@ export default {
                     xhr.send(null);
 
                     if (xhr.status === 200) model.fetchCats();
+                    else console.error("Network Error. Django is running?")
                 }
             }
 
