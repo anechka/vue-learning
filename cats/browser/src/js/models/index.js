@@ -11,7 +11,6 @@ const model = {
         hasFoodNow: 0,
         pushedCats: [],
         enabledButtons: [],
-        // TODO: Should not be a null object
         cats: []
     },
 
@@ -30,7 +29,7 @@ const model = {
                 model.state.cats = djangoJson;
             })
             .catch(() => {
-                console.warn("Network Error. Django is running?");
+                console.error("Network Error. Django is running?");
             })
         }
 

@@ -11,7 +11,7 @@ import model from "models"
 const app = new Vue({
     el: "#app",
     data: {
-        hello: "Hello Vue!",
+        hello: "Hello Vue 2.3!",
         name: "Аня!",
         bowlValue: 2,
         sharedState: model.state
@@ -24,15 +24,18 @@ const app = new Vue({
                 if (!cat.syt) shouldFeedCount++
             }
 
-            return { count: shouldFeedCount, bowls: Math.round(shouldFeedCount / this.bowlValue) };
+            return {
+                count: shouldFeedCount,
+                bowls: Math.round(shouldFeedCount / this.bowlValue)
+            }
         }
     },
 
     methods: {
 
         feedCat() {
-            for (const catIndexString in this.sharedState.cats) {
-                this.sharedState.cats[catIndexString].syt = !this.sharedState.cats[catIndexString].syt;
+            for (const cat of this.sharedState.cats) {
+                cat.syt = !cat.syt
             }
             model.state.hasFoodNow = model.state.cats.length - this.catsObject.count
         }
