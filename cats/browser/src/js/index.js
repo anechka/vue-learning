@@ -11,7 +11,7 @@ import model from "models"
 const app = new Vue({
     el: "#app",
     data: {
-        hello: "Hello Vue!",
+        hello: "Hello Vue 2.3!",
         name: "Аня!",
         bowlValue: 2,
         sharedState: model.state

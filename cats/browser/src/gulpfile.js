@@ -1,11 +1,11 @@
 const gulp = require("gulp");
 
-const rollup = require('rollup-stream');// JS modules
+const rollup = require("rollup-stream");// JS modules
 const buble = require("rollup-plugin-buble");// ES6 compiler
-const eslint = require('gulp-eslint');// Code style checker
+const eslint = require("gulp-eslint");// Code style checker
 
 const includePaths = require("rollup-plugin-includepaths");// import module by name
-const source = require('vinyl-source-stream');// saving rollup bundle
+const source = require("vinyl-source-stream");// saving rollup bundle
 
 const config = {
     bundleName: "vueDjango",
@@ -19,11 +19,11 @@ const config = {
     }
 };
 
-gulp.task('javascript', function() {
+gulp.task("javascript", function() {
 
     return rollup({
             // any option supported by Rollup can be set here.
-            format: 'iife',
+            format: "iife",
             sourceMap: true,
             entry: `${config.srcLocation}index.js`,
             moduleName: config.bundleName,
@@ -35,11 +35,11 @@ gulp.task('javascript', function() {
                 //commonjs()
             ]
         })
-        .pipe(source('all.js'))
+        .pipe(source("all.js"))
         .pipe(gulp.dest(`${config.distLocation}js`));
 });
 
-gulp.task('lint', () => {
+gulp.task("lint", () => {
     // ESLint ignores files with "tests" paths.
     // So, it's best to have gulp ignore the directory as well.
     // Also, Be sure to return the stream from the task;
@@ -57,14 +57,14 @@ gulp.task('lint', () => {
                 extends: "eslint:recommended",
                 rules: config.eslintRules,
                 envs: [
-                    'es6'
+                    "es6"
                 ],
                 globals: [
-                    'Vue',
-                    'window',
-                    'console',
-                    'fetch',
-                    'XMLHttpRequest'
+                    "Vue",
+                    "window",
+                    "console",
+                    "fetch",
+                    "XMLHttpRequest"
                 ]
             }
         ))
@@ -75,3 +75,5 @@ gulp.task('lint', () => {
         // lint error, return the stream and pipe to failAfterError last.
         .pipe(eslint.failAfterError());
 });
+
+gulp.task("default", () => gulp.watch(`${config.srcLocation}**/*`, ["lint", "javascript"]));
