@@ -5,7 +5,11 @@
 
 ES6 code from https://lebab.io/try-it */
 
-import localComponents from "components"
+import bowlComponent from "components/bowl.vue"
+import catComponent from "components/cat.vue"
+import selectComponent from "components/selector.vue"
+import tableComponent from "components/table.vue"
+
 import model from "models"
 
 const app = new Vue({
@@ -41,10 +45,10 @@ const app = new Vue({
         }
     },
     components: {
-        "bowl": localComponents.bowl,
-        "cat": localComponents.cat,
-        "select-cat": localComponents.selectCat,
-        "table-tr-component": localComponents.table
+        "bowl": bowlComponent,
+        "cat": catComponent,
+        "select-cat": selectComponent,
+        "table-tr-component": tableComponent
     },
 
     beforeCreate: model.fetchCats

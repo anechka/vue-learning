@@ -3,6 +3,7 @@ const gulp = require("gulp");
 const rollup = require("rollup-stream");// JS modules
 const buble = require("rollup-plugin-buble");// ES6 compiler
 const eslint = require("gulp-eslint");// Code style checker
+const vue = require("rollup-plugin-vue2");
 
 const includePaths = require("rollup-plugin-includepaths");// import module by name
 const source = require("vinyl-source-stream");// saving rollup bundle
@@ -28,7 +29,7 @@ gulp.task("javascript", function() {
             entry: `${config.srcLocation}index.js`,
             moduleName: config.bundleName,
             plugins: [
-                //vue(),
+                vue(),
                 buble({transforms: { forOf: false }}),
                 includePaths(config.includePathOptions),
                 //nodeResolve({ browser: true, jsnext: true, main: true }),
