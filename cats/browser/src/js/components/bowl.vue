@@ -1,5 +1,7 @@
-<template>
-    <span><icon></icon>Покушали {{ count }}</span>
+<template lang='jade'>
+    span
+        icon
+        | Покушали {{ count }}
 </template>
 
 <script>
