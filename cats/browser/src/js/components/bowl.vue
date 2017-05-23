@@ -8,11 +8,6 @@
     import model from "models"
 
     export default {
-        data () {
-            return {
-                msg: 'Hello world!'
-            }
-        },
         computed: {
             count() {
                 return model.state.hasFoodNow

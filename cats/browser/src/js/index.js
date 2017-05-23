@@ -41,7 +41,7 @@ const app = new Vue({
             for (const cat of this.sharedState.cats) {
                 cat.syt = !cat.syt
             }
-            model.state.hasFoodNow = model.state.cats.length - this.catsObject.count
+            this.sharedState.hasFoodNow = this.sharedState.cats.length - this.catsObject.count
         }
     },
     components: {
